@@ -1,0 +1,50 @@
+#######################################################################
+# Target-independent parts used in system and user emulation
+universal-obj-y =
+
+#######################################################################
+# QObject
+qobject-y = qint.o qstring.o qdict.o qlist.o qfloat.o qbool.o
+qobject-y += qjson.o json-lexer.o json-streamer.o json-parser.o
+qobject-y += qerror.o error.o qemu-error.o
+
+qobject-obj-y = $(qobject-y)
+
+universal-obj-y += $(qobject-obj-y)
+
+#######################################################################
+# QOM
+qom-y = object.o container.o qom-qobject.o
+qom-twice-y = cpu.o
+
+qom-obj-y = $(qom-y)
+qom-obj-twice-y = $(addprefix qom/, $(qom-twice-y))
+
+######################################################################
+# libuser
+user-y =
+user-y += envlist.o path.o
+user-y += tcg-runtime.o host-utils.o
+user-y += cutils.o cache-utils.o
+user-y += module.o
+user-y += qemu-user.o
+user-y += $(qom-obj-twice-y)
+
+user-obj-y = $(user-y)
+
+libdis-y = 
+libdis-y += arm-dis.o 
+libdis-y += i386-dis.o
+
+libdis-obj-y = $(libdis-y)
+
+######################################################################
+# qapi
+
+qapi-nested-y = qapi-visit-core.o qapi-dealloc-visitor.o qmp-input-visitor.o
+qapi-nested-y += qmp-output-visitor.o qmp-registry.o qmp-dispatch.o
+qapi-nested-y += string-input-visitor.o string-output-visitor.o
+qapi-obj-y = $(qapi-nested-y)
+
+QEMU_CFLAGS += $(GLIB_CFLAGS)
+
