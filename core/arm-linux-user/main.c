@@ -28,7 +28,6 @@
 
 #include "qemu.h"
 #include "qemu-common.h"
-#include "cache-utils.h"
 #include "cpu.h"
 #include "tcg.h"
 #include "qemu-timer.h"
@@ -1076,8 +1075,6 @@ int main(int argc, char **argv, char **envp)
     int ret;
 
     module_call_init(MODULE_INIT_QOM);
-
-    qemu_cache_utils_init(envp);
 
     if ((envlist = envlist_create()) == NULL) {
         (void) fprintf(stderr, "Unable to allocate envlist\n");
