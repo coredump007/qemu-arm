@@ -78,32 +78,7 @@ static void arm_cpu_reset(CPUState *s)
         env->cp15.c15_cpar = 1;
     }
 #else
-    /* SVC mode with interrupts disabled.  */
-    env->uncached_cpsr = ARM_CPU_MODE_SVC | CPSR_A | CPSR_F | CPSR_I;
-    /* On ARMv7-M the CPSR_I is the value of the PRIMASK register, and is
-       clear at reset.  Initial SP and PC are loaded from ROM.  */
-    if (IS_M(env)) {
-        uint32_t pc;
-        uint8_t *rom;
-        env->uncached_cpsr &= ~CPSR_I;
-        rom = rom_ptr(0);
-        if (rom) {
-            /* We should really use ldl_phys here, in case the guest
-               modified flash and reset itself.  However images
-               loaded via -kernel have not been copied yet, so load the
-               values directly from there.  */
-            env->regs[13] = ldl_p(rom);
-            pc = ldl_p(rom + 4);
-            env->thumb = pc & 1;
-            env->regs[15] = pc & ~1;
-        }
-    }
-    env->vfp.xregs[ARM_VFP_FPEXC] = 0;
-    env->cp15.c2_base_mask = 0xffffc000u;
-    /* v7 performance monitor control register: same implementor
-     * field as main ID register, and we implement no event counters.
-     */
-    env->cp15.c9_pmcr = (cpu->midr & 0xff000000);
+#error "Not support system emulation."
 #endif
     set_flush_to_zero(1, &env->vfp.standard_fp_status);
     set_flush_inputs_to_zero(1, &env->vfp.standard_fp_status);
