@@ -64,8 +64,6 @@ obj-y = main.o syscall.o strace.o mmap.o signal.o thunk.o \
       elfload.o linuxload.o uaccess.o gdbstub.o cpu-uname.o \
       user-exec.o
 
-obj-$(TARGET_HAS_BFLT) += flatload.o
-
 nwfpe-obj-y = fpa11.o fpa11_cpdo.o fpa11_cpdt.o fpa11_cprt.o fpopcode.o
 nwfpe-obj-y += single_cpdo.o double_cpdo.o extended_cpdo.o
 obj-arm-y +=  $(addprefix nwfpe/, $(nwfpe-obj-y))

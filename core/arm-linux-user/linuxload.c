@@ -157,13 +157,6 @@ int loader_exec(const char * filename, char ** argv, char ** envp,
                 && bprm->buf[2] == 'L'
                 && bprm->buf[3] == 'F') {
             retval = load_elf_binary(bprm, regs, infop);
-#if defined(TARGET_HAS_BFLT)
-        } else if (bprm->buf[0] == 'b'
-                && bprm->buf[1] == 'F'
-                && bprm->buf[2] == 'L'
-                && bprm->buf[3] == 'T') {
-            retval = load_flt_binary(bprm,regs,infop);
-#endif
         } else {
             fprintf(stderr, "Unknown binary format\n");
             return -1;
